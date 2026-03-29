@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Spoti Extension",
+  "version": "1.0.0",
+  "description": "Controle seu Spotify com facilidade",
+  "permissions": [
+    "storage",
+    "tabs",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:5000/*",
+    "http://localhost:5000/*",
+    "https://accounts.spotify.com/*",
+    "https://api.spotify.com/*"
+  ],
+  "background": {
+    "scripts": ["background/background.js"]
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Spoti Extension"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

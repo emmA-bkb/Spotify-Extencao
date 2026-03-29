@@ -1,0 +1,35 @@
+# Environment & Credentials
+.env
+.env.local
+*.key
+credentials.json
+secrets.json
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# Build
+node_modules/
+dist/
+build/
+spoti.xpi
+spoti-extension.zip
+
+# Temporary
+*.tmp
+*~
+*.bak
