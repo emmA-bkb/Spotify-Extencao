@@ -7,26 +7,31 @@
 body {
     width: 350px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: #1a1a1a;
+    background: #1a1a1a url('../assets/GreenStars.png') center/cover no-repeat;
+    background-attachment: fixed;
     color: #ffffff;
 }
 
 .container {
-    padding: 20px;
+    padding: 60px 20px 20px 20px;
     min-height: 300px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    margin-top: 10px;
 }
 
 .header h1 {
-    font-size: 28px;
+    font-size: 32px;
     color: #1DB954;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 8px rgba(29, 185, 84, 0.3);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .description {
@@ -49,14 +54,15 @@ body {
 }
 
 .btn-primary {
-    background: #1DB954;
+    background: linear-gradient(135deg, #1DB954, #1aa34a);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
+    font-weight: 600;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(29, 185, 84, 0.4);
 }
 
 .btn-primary:active {
@@ -73,49 +79,103 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* Botão de Logout */
+.logout-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 1001;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.logout-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.logout-btn:active {
+    transform: scale(0.95);
+}
+
 /* Seção de Autenticação */
 .auth-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 25px;
+    padding: 20px;
 }
 
 /* Seção de Usuário */
 .user-section {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    gap: 8px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 12px;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 10px 6px 6px;
+    border-radius: 20px;
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .avatar {
-    width: 50px;
-    height: 50px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 1.5px solid #fff;
+    flex-shrink: 0;
 }
 
 .user-info h2 {
-    font-size: 16px;
+    font-size: 12px;
     color: #fff;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
 }
 
 .user-info p {
-    font-size: 12px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.8);
     margin: 5px 0 0 0;
+}
+
+.user-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Loading */
@@ -235,13 +295,33 @@ body {
 
 /* Button Group */
 .button-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
 }
 
 .button-group .btn {
     width: 100%;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.button-group .btn-secondary {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.15), rgba(29, 185, 84, 0.05));
+    border: 1px solid rgba(29, 185, 84, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button-group .btn-secondary:hover {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.25), rgba(29, 185, 84, 0.15));
+    border: 1px solid rgba(29, 185, 84, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
 }
 
 /* Modal */
@@ -392,60 +472,94 @@ body {
 
 /* Playlists List */
 .playlists-list {
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    padding: 4px;
+}
+
+.playlists-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlists-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.playlists-list::-webkit-scrollbar-thumb {
+    background: rgba(29, 185, 84, 0.4);
+    border-radius: 3px;
+}
+
+.playlists-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(29, 185, 84, 0.6);
 }
 
 .playlist-item {
     padding: 12px;
-    border: 1px solid #404040;
-    border-radius: 8px;
+    border: 2px solid rgba(29, 185, 84, 0.3);
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s;
-    background: #252525;
+    transition: all 0.3s;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(29, 185, 84, 0.05));
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 14px;
     color: #ffffff;
+    min-height: 70px;
+}
+
+.playlist-cover {
+    width: 65px;
+    height: 65px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .playlist-item:hover {
-    background: #303030;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(29, 185, 84, 0.12));
     border-color: #1DB954;
+    box-shadow: 0 6px 16px rgba(29, 185, 84, 0.25);
+    transform: translateY(-1px);
 }
 
 .playlist-item.selected {
-    background: rgba(29, 185, 84, 0.1);
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2), rgba(29, 185, 84, 0.1));
     border-color: #1DB954;
-    font-weight: 600;
+    box-shadow: 0 6px 16px rgba(29, 185, 84, 0.35);
 }
 
 .playlist-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .playlist-name {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     color: #ffffff;
     margin: 0;
+    line-height: 1.2;
 }
 
 .playlist-count {
-    font-size: 12px;
+    font-size: 13px;
     color: #b0b0b0;
-    margin: 2px 0 0 0;
+    margin: 0;
 }
 
 .playlist-type {
     font-size: 12px;
-    color: #909090;
-    background: #404040;
-    padding: 2px 8px;
-    border-radius: 4px;
+    color: #1DB954;
+    font-weight: 600;
+    margin-top: 2px;
 }
 
 /* Threshold Control */

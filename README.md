@@ -1,56 +1,32 @@
-# 🎵 Spoti - Extensão Firefox para Spotify
+# Spoti - Extensão Firefox para Spotify
 
 Adicione automaticamente suas músicas favoritas a uma playlist quando você ouve um percentual configurável delas (padrão 70%).
 
-## ✨ Features
+## Características
 
-- ✅ **Auto-Add Automático** - Adiciona música quando você ouve 70% dela (configurável)
-- ✅ **Detecção de Pulos** - Não adiciona se você pular a música
-- ✅ **Sem Duplicatas** - Mesma música nunca é adicionada duas vezes
-- ✅ **Funciona em Background** - Continua funcionando mesmo com a extensão fechada
-- ✅ **Notificações** - Aviso visual quando uma música é adicionada
-- ✅ **Múltiplas Playlists** - Escolha qualquer playlist da sua conta
-- ✅ **Configurável** - Ajuste o percentual de reprodução (10-100%)
-- ✅ **Seguro** - OAuth 2.0 Spotify, seus dados não são compartilhados
+Auto-add automático que adiciona música quando você ouve 70% dela (configurável). Detecta pulos para não adicionar se você pular a música. Impede duplicatas onde a mesma música nunca é adicionada duas vezes. Funciona em background mesmo com a extensão fechada. Notificações visuais quando uma música é adicionada. Suport para múltiplas playlists. Configurável para ajustar o percentual de reprodução (10-100%). Seguro com OAuth 2.0 Spotify e dados não compartilhados.
 
-## 🚀 Como Instalar
+## Instalação
 
-### Opção 1: Firefox Add-ons (Em Breve)
-[Disponível em em breve na Mozilla Store]
-
-### Opção 2: Instalação Manual
 1. Download do arquivo `spoti.xpi`
 2. Abra Firefox e vá em `about:addons`
-3. Clique no ⚙️ e selecione "Install Add-on From File"
+3. Clique no ícone de configurações e selecione "Install Add-on From File"
 4. Escolha `spoti.xpi`
-5. Pronto! 🎉
 
-## 📋 Como Usar
+Para publicar na Firefox Add-ons Store, veja a seção "Publicar no Firefox".
 
-1. **Conectar ao Spotify**
-   - Clique em "Conectar ao Spotify"
-   - Autorize as permissões necessárias
-   - Você será redirecionado automaticamente
+## Como Usar
 
-2. **Escolher Playlist**
-   - Clique em "🎵 Escolher Playlist"
-   - Selecione a playlist onde quer adicionar músicas
+1. Conecte ao Spotify clicando em "Conectar ao Spotify" e autorize as permissões
+2. Escolha uma playlist clicando em "Escolher Playlist" e selecione onde adicionar
+3. Configure o percentual em "Configurações" (padrão: 70%)
+4. A extensão adiciona automaticamente quando atingir o percentual e você recebe notificações
 
-3. **Configurar Percentual (Opcional)**
-   - Clique em "⚙️ Configurações"
-   - Ajuste o percentual (padrão: 70%)
-   - Veja a playlist selecionada
-
-4. **Curtir Músicas!**
-   - A extensão automaticamente adiciona quando você atinge o percentual
-   - Recebe notificação quando cada música é adicionada
-
-## 🔧 Para Desenvolvedores / Desenvolvimento Local
+## Desenvolvimento Local
 
 ### Instalação
 
 ```bash
-# Backend
 cd backend
 pip install -r requirements.txt
 python main.py
@@ -58,89 +34,195 @@ python main.py
 
 O servidor ficará em `http://127.0.0.1:5000`
 
-### Carregar a Extensão no Firefox
+### Carregar no Firefox
 
 1. Abra `about:debugging` no Firefox
 2. Clique em "This Firefox"
 3. Clique em "Load Temporary Add-on"
-4. Navegue até a pasta `spoti` e selecione `manifest.json`
+4. Selecione `manifest.json` do projeto
 
 ### Estrutura do Projeto
 
 ```
 spoti/
-├── manifest.json              # Configuração da extensão
-├── popup/                     # Interface Popup
+├── manifest.json
+├── popup/
 │   ├── popup.html
 │   ├── popup.css
 │   └── popup.js
-├── background/                # Scripts em background
-│   └── background.js          # Auto-add logic
-├── content/                   # Content scripts
+├── background/
+│   └── background.js
+├── content/
 │   └── content.js
-├── icons/                     # Ícones
-├── backend/                   # Backend Python
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── config/
-│   │   │   └── settings.py
-│   │   ├── routes/
-│   │   │   └── auth.py        # OAuth & Spotify API
-│   │   └── utils/
-│   ├── requirements.txt
-│   ├── .env
-│   └── main.py
-├── PUBLICACAO.md              # Guia para publicar
-├── QUICK-START.md             # Guia rápido
-└── README.md
+├── icons/
+├── src/
+│   └── config.js
+└── backend/
+    ├── app/
+    │   ├── main.py
+    │   ├── config/
+    │   │   └── settings.py
+    │   └── routes/
+    │       └── auth.py
+    ├── requirements.txt
+    ├── .env.example
+    └── main.py
 ```
 
-### Variáveis de Ambiente (.env)
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` em `backend/`:
 
 ```
 SPOTIFY_CLIENT_ID=seu_client_id
 SPOTIFY_CLIENT_SECRET=seu_client_secret
-SPOTIFY_AUTH_URL=https://accounts.spotify.com/authorize
-SPOTIFY_API_URL=https://api.spotify.com/v1
 SPOTIFY_REDIRECT_URI=http://127.0.0.1:5000/auth/spotify/callback
+SECRET_KEY=gere_uma_chave_segura_aqui
+FLASK_DEBUG=False
 ```
 
-## 🌐 Publicar a Extensão
+Gere uma chave segura:
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
 
-Veja [QUICK-START.md](QUICK-START.md) para instruções rápidas de publicação.
+## Deploy em Produção
 
-## 🔐 Privacidade & Segurança
+### Backend no Render.com
 
-- ✅ Nenhum dado pessoal é coletado
-- ✅ Comunicação criptografada com Spotify
-- ✅ Backend não armazena seus tokens
-- ✅ Código Open Source
-- ✅ Sem anúncios ou tracking
+1. Acesse https://render.com e crie uma conta com GitHub
+2. Clique em "New" depois "Web Service"
+3. Configure:
+   - Nome: spoti-backend
+   - Runtime: Python 3
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `gunicorn app.main:app`
 
-## 📝 Permissões
+4. Adicione Environment Variables:
+   ```
+   SPOTIFY_CLIENT_ID=seu_id
+   SPOTIFY_CLIENT_SECRET=seu_secret
+   SPOTIFY_REDIRECT_URI=https://seu-backend.onrender.com/auth/spotify/callback
+   SECRET_KEY=sua_chave_segura
+   FLASK_DEBUG=False
+   ```
 
-- `storage` - Armazenar suas preferências localmente
+5. Deploy leva 2-3 minutos e você copia a URL
+
+### Atualizar URLs da Extensão
+
+Edite `popup.js` e `background.js`:
+```javascript
+const BACKEND_URL = 'https://seu-backend.onrender.com';
+```
+
+No arquivo `src/config.js`:
+```javascript
+const BACKEND_URL = 'https://seu-backend.onrender.com';
+```
+
+### Criar Arquivo .xpi
+
+Windows (PowerShell):
+```powershell
+cd c:\Visual Studio\spoti
+Compress-Archive -Path * -DestinationPath spoti.zip
+```
+
+Renomeie `spoti.zip` para `spoti.xpi`
+
+Linux/Mac:
+```bash
+cd /caminho/do/spoti
+zip -r spoti.xpi * -x "*.git*" "backend/*" "node_modules/*"
+```
+
+### Publicar no Firefox
+
+1. Crie conta em addons.mozilla.org
+2. Vá em "Submit Your Add-on"
+3. Envie um arquivo `.zip` da extensão
+4. Preencha informações:
+   - Nome: Spoti - Auto-Add Playlist
+   - Descrição: Adicione automaticamente músicas à sua playlist do Spotify quando atingir 70%
+   - Ícones (128x128, 256x256, 512x512)
+5. Aguarde review (5-7 dias)
+
+## Segurança
+
+Nenhum dado pessoal é coletado. Comunicação criptografada via HTTPS com Spotify. Backend não armazena tokens permanentemente. OAuth 2.0 conforme RFC 6749. Tokens com expiração e refresh automático.
+
+### Checklist de Segurança em Produção
+
+Backend (Python/Flask):
+- Criar arquivo `.env` e gerar `SECRET_KEY` forte
+- CORS restrito apenas a `moz-extension://*`
+- DEBUG sempre `False` em produção
+- Usar HTTPS em todas as URLs
+- Tokens salvos na sessão (servidor-side)
+
+Frontend (JavaScript):
+- Usar `chrome.storage.local` (isolado por extensão)
+- Validar token antes de usar
+- Renovar com refresh_token quando expirar
+- Solicitar apenas permissões necessárias
+
+OAuth 2.0:
+- State token gerado automaticamente pelo Spotify
+- Redirect URI validado
+- Scopes limitados: playlist-modify-private, user-read-playback-state, playlist-read-private
+
+Credenciais Spotify:
+- Nunca commitar .env com credenciais reais
+- Nunca compartilhar screenshots com credenciais
+- Rotacionar se comprometidas
+- Usar diferentes credenciais para dev/prod
+
+Dependências:
+- Manter Flask e bibliotecas atualizadas
+- Usar `pip install -r requirements.txt` com versões fixas
+- Revisar regularmente: `pip audit`
+
+## Permissões
+
+- `storage` - Armazenar preferências localmente
 - `tabs` - Redirect do OAuth
-- `notifications` - Notificar quando adiciona música
-- `host_permissions` - Comunicar com Spotify API e backend
+- `notifications` - Avisos ao adicionar música
+- `host_permissions` - Comunicar com APIs
 
-## 🐛 Reportar Bugs
+## Troubleshooting
 
-Encontrou um problema? Abra uma issue!
+Erro ao conectar:
+- Verifique se backend está rodando: `python main.py`
+- Confirme URLs corretas em `BACKEND_URL`
 
-## 📄 Licença
+Permissão negada:
+- Faça logout e login novamente
+- Playlist deve ser sua (não de outra pessoa)
+- Tokens expiram em 1 hora, sistema faz refresh automático
 
-MIT License
+Botão não responde:
+- Abra console do Firefox (F12)
+- Procure erros na aba "Console"
+- Verifique logs do backend
 
-## 🙏 Créditos
+## Dependências
 
-Desenvolvido com ❤️ para fãs de Spotify
+Backend:
+- Flask 2.3.2
+- Flask-CORS 4.0.0
+- python-dotenv 1.0.0
+- requests 2.31.0
+- gunicorn (produção)
 
----
+Frontend:
+- Nenhuma dependência externa (APIs nativas do Firefox)
 
-**Versão:** 1.0.0  
-**Última Atualização:** Março 2026  
-**Requisitos:** Firefox 109+, Conta Spotify (grátis ou premium)
+## Informações
+
+Versão: 1.0.0
+Requisitos: Firefox 109+, Conta Spotify (gratuita ou premium)
+Licença: MIT
     ├── README.md
     └── app/
         ├── __init__.py

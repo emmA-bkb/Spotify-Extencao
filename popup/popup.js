@@ -8,6 +8,7 @@ let thresholdPercentage = 70;
 // Elementos do DOM
 const authSection = document.getElementById('auth-section');
 const userSection = document.getElementById('user-section');
+const userContent = document.getElementById('user-content');
 const loadingDiv = document.getElementById('loading');
 const spotifyLoginBtn = document.getElementById('spotify-login-btn');
 const logoutBtn = document.getElementById('logout-btn');
@@ -225,6 +226,7 @@ async function initiateSpotifyLogin() {
 function showAuthSection() {
     authSection.style.display = 'flex';
     userSection.style.display = 'none';
+    userContent.style.display = 'none';
     loadingDiv.style.display = 'none';
     
     // Parar atualizações de música
@@ -243,6 +245,7 @@ function showAuthSection() {
 function showUserSection(user) {
     authSection.style.display = 'none';
     userSection.style.display = 'flex';
+    userContent.style.display = 'flex';
     loadingDiv.style.display = 'none';
     
     // Atualizar informações do usuário
@@ -438,10 +441,10 @@ async function createPlaylist() {
         const data = await response.json();
         
         if (response.ok) {
-            alert(`✅ Playlist "${playlistName}" criada com sucesso!`);
+            alert(`Playlist "${playlistName}" criada com sucesso`);
             closePlaylistModal();
         } else {
-            alert(`❌ Erro: ${data.error || 'Não foi possível criar a playlist'}`);
+            alert(`Erro: ${data.error || 'Não foi possível criar a playlist'}`);
         }
     } catch (error) {
         console.error('Erro ao criar playlist:', error);
@@ -504,6 +507,18 @@ async function openChoosePlaylistModal() {
             playlistItem.dataset.playlistName = pl.name;
             playlistItem.dataset.playlistPublic = pl.public;
             
+            // Adicionar imagem da playlist
+            const playlistImage = document.createElement('img');
+            playlistImage.className = 'playlist-cover';
+            playlistImage.crossOrigin = 'anonymous';
+            if (pl.images && pl.images.length > 0) {
+                playlistImage.src = pl.images[0].url;
+            } else {
+                // Imagem padrão se não tiver capa
+                playlistImage.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"%3E%3Crect fill="%231DB954" width="300" height="300"/%3E%3C/svg%3E';
+            }
+            playlistImage.alt = pl.name;
+            
             const playlistInfo = document.createElement('div');
             playlistInfo.className = 'playlist-info';
             
@@ -515,15 +530,16 @@ async function openChoosePlaylistModal() {
             playlistCountP.className = 'playlist-count';
             playlistCountP.textContent = `${pl.tracks.total} músicas`;
             
-            playlistInfo.appendChild(playlistNameP);
-            playlistInfo.appendChild(playlistCountP);
-            
             const playlistTypeSpan = document.createElement('span');
             playlistTypeSpan.className = 'playlist-type';
             playlistTypeSpan.textContent = pl.public ? 'Pública' : 'Privada';
             
+            playlistInfo.appendChild(playlistNameP);
+            playlistInfo.appendChild(playlistCountP);
+            playlistInfo.appendChild(playlistTypeSpan);
+            
+            playlistItem.appendChild(playlistImage);
             playlistItem.appendChild(playlistInfo);
-            playlistItem.appendChild(playlistTypeSpan);
             playlistItem.addEventListener('click', selectPlaylist);
             
             playlistsList.appendChild(playlistItem);

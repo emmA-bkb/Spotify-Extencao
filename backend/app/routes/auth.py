@@ -363,8 +363,8 @@ def create_playlist():
 @auth_bp.route('/spotify/user_playlists', methods=['POST'])
 def user_playlists():
     """
-    Retorna as playlists do usuário
-    Endpoint: GET /me/playlists
+    Retorna as playlists do usuário com imagens e informações detalhadas
+    Endpoint: GET /me/playlists + GET /playlists/{id}/images
     """
     access_token = None
     
@@ -398,19 +398,39 @@ def user_playlists():
         
         playlists = result.get('items', [])
         
-        return jsonify({
-            'playlists': [
-                {
-                    'id': pl.get('id'),
-                    'name': pl.get('name'),
-                    'public': pl.get('public'),
-                    'tracks': {
-                        'total': pl.get('tracks', {}).get('total', 0)
-                    }
-                }
-                for pl in playlists
-            ]
-        })
+        # Construir resposta enriquecida com imagens
+        playlists_data = []
+        for pl in playlists:
+            playlist_info = {
+                'id': pl.get('id'),
+                'name': pl.get('name'),
+                'public': pl.get('public'),
+                'tracks': {
+                    'total': pl.get('tracks', {}).get('total', 0)
+                },
+                'images': []
+            }
+            
+            # Tentar obter imagens específicas da playlist
+            if pl.get('id'):
+                try:
+                    images_response = requests.get(
+                        f'{Config.SPOTIFY_API_URL}/playlists/{pl.get("id")}/images',
+                        headers=headers,
+                        timeout=5
+                    )
+                    if images_response.ok:
+                        images = images_response.json()
+                        if images and len(images) > 0:
+                            playlist_info['images'] = images
+                except requests.exceptions.RequestException:
+                    # Se falhar, usar as imagens do objeto original (se existirem)
+                    if pl.get('images'):
+                        playlist_info['images'] = pl.get('images', [])
+            
+            playlists_data.append(playlist_info)
+        
+        return jsonify({'playlists': playlists_data})
         
     except requests.exceptions.RequestException as e:
         error_msg = str(e)

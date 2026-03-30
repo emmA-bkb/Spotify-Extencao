@@ -8,6 +8,18 @@
 </head>
 <body>
     <div class="container">
+        <div id="user-section" class="user-section" style="display: none;">
+            <div class="user-info">
+                <img id="user-avatar" src="" alt="Avatar" class="avatar">
+                <div>
+                    <h2 id="user-name">Carregando...</h2>
+                </div>
+            </div>
+            <button id="logout-btn" class="logout-btn" title="Sair">
+                <img src="../assets/sair.png" alt="Sair" class="logout-icon">
+            </button>
+        </div>
+
         <div class="header">
             <h1>Spoti</h1>
         </div>
@@ -19,15 +31,7 @@
             </button>
         </div>
         
-        <div id="user-section" class="user-section" style="display: none;">
-            <div class="user-info">
-                <img id="user-avatar" src="" alt="Avatar" class="avatar">
-                <div>
-                    <h2 id="user-name">Carregando...</h2>
-                </div>
-            </div>
-            
-            <!-- Seção de Música Atual -->
+        <div id="user-content" class="user-content" style="display: none;">
             <div id="now-playing" class="now-playing" style="display: none;">
                 <div class="now-playing-header">Tocando Agora</div>
                 <div class="track-info">
@@ -59,9 +63,6 @@
                 </button>
                 <button id="create-playlist-btn" class="btn btn-secondary">
                     Criar Playlist
-                </button>
-                <button id="logout-btn" class="btn btn-secondary">
-                    Desconectar
                 </button>
             </div>
         </div>

@@ -17,7 +17,8 @@
     "http://localhost:5000/*",
     "https://accounts.spotify.com/*",
     "https://api.spotify.com/*",
-    "https://spotify-extencao.onrender.com/*"
+    "https://spotify-extencao.onrender.com/*",
+    "https://i.scdn.co/*"
   ],
   "background": {
     "scripts": ["src/config.js", "background/background.js"]
