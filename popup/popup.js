@@ -14,6 +14,10 @@ const spotifyLoginBtn = document.getElementById('spotify-login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const nowPlayingDiv = document.getElementById('now-playing');
 const notPlayingDiv = document.getElementById('not-playing');
+const selectedPlaylistCard = document.getElementById('selected-playlist-card');
+const selectedPlaylistCover = document.getElementById('selected-playlist-cover');
+const selectedPlaylistName = document.getElementById('selected-playlist-name');
+const selectedPlaylistTrackCount = document.getElementById('selected-playlist-track-count');
 
 // Modal elements
 const playlistModal = document.getElementById('playlist-modal');
@@ -227,6 +231,7 @@ function showAuthSection() {
     authSection.style.display = 'flex';
     userSection.style.display = 'none';
     userContent.style.display = 'none';
+    selectedPlaylistCard.style.display = 'none';
     loadingDiv.style.display = 'none';
     
     // Parar atualizações de música
@@ -263,6 +268,9 @@ function showUserSection(user) {
     chrome.storage.local.get(['selected_playlist', 'threshold_percentage'], (storage) => {
         selectedPlaylist = storage.selected_playlist || null;
         thresholdPercentage = storage.threshold_percentage || 70;
+        
+        // Atualizar card da playlist selecionada
+        updateSelectedPlaylistCard();
     });
     
     // Começar a atualizar música a cada 2 segundos
@@ -572,9 +580,22 @@ async function selectPlaylist(event) {
     // Marcar como selecionada
     item.classList.add('selected');
     
+    // Coletar informações detalhadas da playlist
+    const playlistCover = item.querySelector('.playlist-cover')?.src || '';
+    const trackCount = item.querySelector('.playlist-count')?.textContent || '0 músicas';
+    
     // Salvar no storage
-    selectedPlaylist = { id: playlistId, name: playlistName, public: isPublic };
+    selectedPlaylist = { 
+        id: playlistId, 
+        name: playlistName, 
+        public: isPublic,
+        cover: playlistCover,
+        trackCount: trackCount
+    };
     chrome.storage.local.set({ selected_playlist: selectedPlaylist });
+    
+    // Atualizar o card de playlist selecionada
+    updateSelectedPlaylistCard();
     
     // Atualizar info no modal de settings
     updateSelectedPlaylistInfo();
@@ -583,6 +604,24 @@ async function selectPlaylist(event) {
     closeChoosePlaylistModal();
     
     console.log(`Playlist selecionada: ${playlistName}`);
+}
+
+/**
+ * Atualiza o card da playlist selecionada
+ */
+function updateSelectedPlaylistCard() {
+    if (selectedPlaylist && selectedPlaylist.id) {
+        selectedPlaylistName.textContent = selectedPlaylist.name;
+        selectedPlaylistTrackCount.textContent = selectedPlaylist.trackCount || '0 músicas';
+        
+        if (selectedPlaylist.cover) {
+            selectedPlaylistCover.src = selectedPlaylist.cover;
+        }
+        
+        selectedPlaylistCard.style.display = 'block';
+    } else {
+        selectedPlaylistCard.style.display = 'none';
+    }
 }
 
 /**

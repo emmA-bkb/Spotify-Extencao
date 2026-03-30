@@ -207,6 +207,61 @@ body {
     font-size: 14px;
 }
 
+/* Card da Playlist Selecionada */
+.selected-playlist-card {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2), rgba(29, 185, 84, 0.08));
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(29, 185, 84, 0.3);
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.15);
+}
+
+.playlist-card-content {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.selected-playlist-cover {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    flex-shrink: 0;
+}
+
+.selected-playlist-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.selected-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.selected-playlist-info h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1DB954;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.selected-playlist-info span {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
 /* Seção de Música Atual */
 .now-playing {
     background: rgba(255, 255, 255, 0.1);
