@@ -4,11 +4,8 @@
   "version": "1.0.0",
   "description": "Controle seu Spotify com facilidade",
   "icons": {
-    "16": "icons/icon-16.png",
-    "32": "icons/icon-32.png",
     "48": "icons/icon-48.png",
-    "96": "icons/icon-96.png",
-    "128": "icons/icon-128.png"
+    "96": "icons/icon-96.png"
   },
   "permissions": [
     "storage",
@@ -29,11 +26,8 @@
     "default_popup": "popup/popup.html",
     "default_title": "Spoti Extension",
     "default_icon": {
-      "16": "icons/icon-16.png",
-      "32": "icons/icon-32.png",
       "48": "icons/icon-48.png",
-      "96": "icons/icon-96.png",
-      "128": "icons/icon-128.png"
+      "96": "icons/icon-96.png"
     }
   },
   "content_scripts": [

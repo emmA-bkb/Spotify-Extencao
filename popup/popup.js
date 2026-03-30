@@ -489,24 +489,44 @@ async function openChoosePlaylistModal() {
         const playlists = data.playlists || [];
         
         if (playlists.length === 0) {
-            playlistsList.innerHTML = '<p>Nenhuma playlist encontrada. Crie uma primeira!</p>';
+            playlistsList.textContent = 'Nenhuma playlist encontrada. Crie uma primeira!';
             return;
         }
         
-        // Renderizar playlists
-        playlistsList.innerHTML = playlists.map(pl => `
-            <div class="playlist-item ${selectedPlaylist && selectedPlaylist.id === pl.id ? 'selected' : ''}" data-playlist-id="${pl.id}" data-playlist-name="${pl.name}" data-playlist-public="${pl.public}">
-                <div class="playlist-info">
-                    <p class="playlist-name">${pl.name}</p>
-                    <p class="playlist-count">${pl.tracks.total} músicas</p>
-                </div>
-                <span class="playlist-type">${pl.public ? 'Pública' : 'Privada'}</span>
-            </div>
-        `).join('');
+        // Limpar conteúdo anterior
+        playlistsList.innerHTML = '';
         
-        // Adicionar event listeners
-        document.querySelectorAll('.playlist-item').forEach(item => {
-            item.addEventListener('click', selectPlaylist);
+        // Renderizar playlists com segurança
+        playlists.forEach(pl => {
+            const playlistItem = document.createElement('div');
+            playlistItem.className = `playlist-item ${selectedPlaylist && selectedPlaylist.id === pl.id ? 'selected' : ''}`;
+            playlistItem.dataset.playlistId = pl.id;
+            playlistItem.dataset.playlistName = pl.name;
+            playlistItem.dataset.playlistPublic = pl.public;
+            
+            const playlistInfo = document.createElement('div');
+            playlistInfo.className = 'playlist-info';
+            
+            const playlistNameP = document.createElement('p');
+            playlistNameP.className = 'playlist-name';
+            playlistNameP.textContent = pl.name;
+            
+            const playlistCountP = document.createElement('p');
+            playlistCountP.className = 'playlist-count';
+            playlistCountP.textContent = `${pl.tracks.total} músicas`;
+            
+            playlistInfo.appendChild(playlistNameP);
+            playlistInfo.appendChild(playlistCountP);
+            
+            const playlistTypeSpan = document.createElement('span');
+            playlistTypeSpan.className = 'playlist-type';
+            playlistTypeSpan.textContent = pl.public ? 'Pública' : 'Privada';
+            
+            playlistItem.appendChild(playlistInfo);
+            playlistItem.appendChild(playlistTypeSpan);
+            playlistItem.addEventListener('click', selectPlaylist);
+            
+            playlistsList.appendChild(playlistItem);
         });
     } catch (error) {
         console.error('Erro ao abrir modal de playlists:', error);
@@ -598,14 +618,25 @@ function updateThresholdDisplay() {
  * Atualiza a informação da playlist selecionada
  */
 function updateSelectedPlaylistInfo() {
+    selectedPlaylistInfo.innerHTML = ''; // Limpar antes
+    
     if (selectedPlaylist) {
-        selectedPlaylistInfo.innerHTML = `
-            <div>
-                <p class="selected-playlist-detail name">${selectedPlaylist.name}</p>
-                <p class="selected-playlist-detail type">${selectedPlaylist.public ? '🌍 Pública' : '🔒 Privada'}</p>
-            </div>
-        `;
+        const div = document.createElement('div');
+        
+        const nameP = document.createElement('p');
+        nameP.className = 'selected-playlist-detail name';
+        nameP.textContent = selectedPlaylist.name;
+        
+        const typeP = document.createElement('p');
+        typeP.className = 'selected-playlist-detail type';
+        typeP.textContent = selectedPlaylist.public ? 'Pública' : 'Privada';
+        
+        div.appendChild(nameP);
+        div.appendChild(typeP);
+        selectedPlaylistInfo.appendChild(div);
     } else {
-        selectedPlaylistInfo.innerHTML = '<p>Nenhuma playlist selecionada</p>';
+        const p = document.createElement('p');
+        p.textContent = 'Nenhuma playlist selecionada';
+        selectedPlaylistInfo.appendChild(p);
     }
 }
